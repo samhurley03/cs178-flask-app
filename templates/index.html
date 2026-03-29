@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Packers Analytics Dashboard</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Green Bay Packers Analytics</h1>
+
+<input id="search" placeholder="Search player">
+
+<select id="positionFilter">
+
+<option value="">All Positions</option>
+<option value="QB">QB</option>
+<option value="RB">RB</option>
+<option value="WR">WR</option>
+<option value="TE">TE</option>
+<option value="LB">LB</option>
+
+</select>
+
+</header>
+
+
+<section>
+
+<h2>Roster</h2>
+
+<div id="rosterCards"></div>
+
+</section>
+
+
+<section>
+
+<h2>Schedule</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Week</th>
+<th>Home</th>
+<th>Away</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="scheduleTable"></tbody>
+
+</table>
+
+</section>
+
+
+<section>
+
+<h2>NFL Live Scores</h2>
+
+<ul id="scoreboard"></ul>
+
+</section>
+
+<section>
+
+<h2>Live NFL Scoreboard</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Away</th>
+<th>Score</th>
+<th>Home</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="scoreTable"></tbody>
+
+</table>
+
+</section>
+
+
+<section>
+
+<h2>Team Statistics</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Stat</th>
+<th>Value</th>
+</tr>
+</thead>
+
+<tbody id="teamStats"></tbody>
+
+</table>
+
+</section>
+
+<section>
+
+<h2>Live Packers Game</h2>
+
+<div id="packersGame">
+
+Waiting for game...
+
+</div>
+
+</section>
+
+<section>
+
+<h2>2024 Schedule</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Week</th>
+<th>Home</th>
+<th>Away</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="lastYearSchedule"></tbody>
+
+</table>
+
+</section>
+
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
