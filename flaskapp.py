@@ -4,8 +4,9 @@
 
 from flask import Flask
 from flask import render_template
-from flask import Flask, render_template, request, redirect, url_for, flash
-#from dbCode import *
+from flask import Flask, render_template, requests, redirect, url_for, flash, jsonify
+import requests
+from dbCode import *
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
