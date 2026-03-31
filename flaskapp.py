@@ -4,9 +4,7 @@
 
 from flask import Flask
 from flask import render_template
-from flask import Flask, render_template, redirect, url_for, flash, jsonify
-import creds
-import requests
+from flask import render_template, redirect, url_for, flash, jsonify, request
 from dbCode import *
 
 app = Flask(__name__)
@@ -40,9 +38,9 @@ def games():
 
 @app.route("/add-player", methods=["POST"])
 def add_player():
-    name = requests.form["name"]
-    position = requests.form["position"]
-    jersey = requests.form["jersey"]
+    name = request.form["name"]
+    position = request.form["position"]
+    jersey = request.form["jersey"]
 
     conn = get_conn()
     cursor = conn.cursor()
@@ -66,7 +64,7 @@ def delete_player(id):
 
 @app.route("/update-player/<int:id>", methods=["POST"])
 def update_player(id):
-    jersey = requests.form["jersey"]
+    jersey = request.form["jersey"]
 
     conn = get_conn()
     cursor = conn.cursor()
