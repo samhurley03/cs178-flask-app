@@ -4,7 +4,7 @@
 
 from flask import Flask
 from flask import render_template
-from flask import Flask, render_template, requests, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, redirect, url_for, flash, jsonify
 import requests
 from dbCode import *
 
