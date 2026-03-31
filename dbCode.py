@@ -6,19 +6,41 @@ import pymysql
 import creds
 
 def get_conn():
-    """Returns a connection to the MySQL RDS instance."""
-    conn = pymysql.connect(
+    return pymysql.connect(
         host=creds.host,
         user=creds.user,
         password=creds.password,
-        db=creds.db,
+        database=creds.db,
+        cursorclass=pymysql.cursors.DictCursor
     )
-    return conn
 
-def execute_query(query, args=()):
-    """Executes a SELECT query and returns all rows as dictionaries."""
-    cur = get_conn().cursor(pymysql.cursors.DictCursor)
-    cur.execute(query, args)
-    rows = cur.fetchall()
-    cur.close()
-    return rows
+def get_all_players():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM players;")
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+def get_player_stats():
+    conn = get_conn()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT players.name, players.position, stats.passing_yards,
+               stats.rushing_yards, stats.touchdowns
+        FROM players
+        JOIN stats ON players.player_id = stats.player_id;
+    """)
+
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+def get_games():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM games;")
+    result = cursor.fetchall()
+    conn.close()
+    return result

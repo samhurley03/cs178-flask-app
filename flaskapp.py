@@ -12,12 +12,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
                                    # it is required, but you can leave this alone
 
-TEAM_ID = 9
 
-ROSTER = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}/roster"
-SCHEDULE = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}/schedule"
-SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
-STATS = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}/statistics"
 
 
 @app.route("/")
@@ -25,130 +20,67 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/api/roster")
+@app.route("/roster")
 def roster():
-    data = requests.get(ROSTER).json()
-    players = []
-
-    for g in data["athletes"]:
-        for p in g["items"]:
-            players.append({
-                "name": p["fullName"],
-                "position": g["position"],
-                "jersey": p.get("jersey","")
-            })
-
-    return jsonify(players)
+    players = get_all_players()
+    return render_template("roster.html", players=players)
 
 
-@app.route("/api/schedule")
-def schedule():
-
-    data = requests.get(SCHEDULE).json()
-    games = []
-
-    for g in data["events"]:
-
-        comp = g["competitions"][0]
-
-        games.append({
-            "week": g["week"]["number"],
-            "home": comp["competitors"][0]["team"]["displayName"],
-            "away": comp["competitors"][1]["team"]["displayName"],
-            "status": g["status"]["type"]["shortDetail"]
-        })
-
-    return jsonify(games)
+@app.route("/playerstats")
+def playerstats():
+    stats = get_player_stats()
+    return render_template("playerstats.html", stats=stats)
 
 
-@app.route("/api/scores")
-def scores():
+@app.route("/games")
+def games():
+    games = get_games()
+    return render_template("games.html", games=games)
 
-    data = requests.get(SCOREBOARD).json()
-    games = []
+@app.route("/add-player", methods=["POST"])
+def add_player():
+    name = requests.form["name"]
+    position = requests.form["position"]
+    jersey = requests.form["jersey"]
 
-    for g in data["events"]:
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO players (name, position, jersey) VALUES (%s,%s,%s)",
+        (name, position, jersey)
+    )
+    conn.commit()
+    conn.close()
 
-        comp = g["competitions"][0]
+    return redirect(url_for("roster"))
 
-        games.append({
-            "home": comp["competitors"][0]["team"]["displayName"],
-            "away": comp["competitors"][1]["team"]["displayName"],
-            "homeScore": comp["competitors"][0]["score"],
-            "awayScore": comp["competitors"][1]["score"],
-            "status": g["status"]["type"]["shortDetail"]
-        })
+@app.route("/delete-player/<int:id>")
+def delete_player(id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM players WHERE player_id=%s", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("roster"))
 
-    return jsonify(games)
+@app.route("/update-player/<int:id>", methods=["POST"])
+def update_player(id):
+    jersey = requests.form["jersey"]
 
-@app.route("/api/teamstats")
-def teamstats():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE players SET jersey=%s WHERE player_id=%s",
+        (jersey, id)
+    )
+    conn.commit()
+    conn.close()
 
-    TEAM_STATS_API = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/9/statistics"
-
-    r = requests.get(TEAM_STATS_API)
-    data = r.json()
-
-    stats = []
-
-    try:
-        categories = data["results"]["stats"]["categories"]
-
-        for category in categories:
-            for stat in category["stats"]:
-                stats.append({
-                    "name": stat["displayName"],
-                    "value": stat["displayValue"]
-                })
-
-    except:
-        stats.append({
-            "name": "Stats unavailable",
-            "value": "-"
-        })
-
-    return jsonify(stats)
+    return redirect(url_for("roster"))
 
 
-# ADD SECTION 4 HERE
-@app.route("/api/leaders")
-def leaders():
 
-    url="https://site.api.espn.com/apis/site/v2/sports/football/nfl/statistics"
-    data=requests.get(url).json()
 
-    leaders=[]
-
-    for cat in data["leaders"]:
-        leaders.append({
-            "category":cat["displayName"],
-            "leader":cat["leaders"][0]["athlete"]["displayName"],
-            "value":cat["leaders"][0]["displayValue"]
-        })
-
-    return jsonify(leaders)
-
-@app.route("/api/schedule_last_year")
-def schedule_last_year():
-
-    url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/9/schedule?season=2024"
-
-    data = requests.get(url).json()
-
-    games = []
-
-    for g in data["events"]:
-
-        comp = g["competitions"][0]
-
-        games.append({
-            "week": g["week"]["number"],
-            "home": comp["competitors"][0]["team"]["displayName"],
-            "away": comp["competitors"][1]["team"]["displayName"],
-            "status": g["status"]["type"]["shortDetail"]
-        })
-
-    return jsonify(games)
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
