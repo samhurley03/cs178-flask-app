@@ -1,151 +1,75 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<title>Packers Analytics Dashboard</title>
-
-<link rel="stylesheet" href="/static/style.css">
-
+    <title>Packers Dashboard</title>
 </head>
-
 <body>
 
-<header>
-
-<h1>Green Bay Packers Analytics</h1>
-
-<input id="search" placeholder="Search player">
-
-<select id="positionFilter">
-
-<option value="">All Positions</option>
-<option value="QB">QB</option>
-<option value="RB">RB</option>
-<option value="WR">WR</option>
-<option value="TE">TE</option>
-<option value="LB">LB</option>
-
-</select>
-
-</header>
-
-
-<section>
+<h1>Green Bay Packers Dashboard</h1>
 
 <h2>Roster</h2>
-
-<div id="rosterCards"></div>
-
-</section>
-
-
-<section>
-
-<h2>Schedule</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Week</th>
-<th>Home</th>
-<th>Away</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody id="scheduleTable"></tbody>
-
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Jersey</th>
+        <th>Height</th>
+        <th>Weight</th>
+    </tr>
+    {% for p in players %}
+    <tr>
+        <td>{{ p.name }}</td>
+        <td>{{ p.position }}</td>
+        <td>{{ p.jersey }}</td>
+        <td>{{ p.height }}</td>
+        <td>{{ p.weight }}</td>
+    </tr>
+    {% endfor %}
 </table>
 
-</section>
 
-
-<section>
-
-<h2>NFL Live Scores</h2>
-
-<ul id="scoreboard"></ul>
-
-</section>
-
-<section>
-
-<h2>Live NFL Scoreboard</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Away</th>
-<th>Score</th>
-<th>Home</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody id="scoreTable"></tbody>
-
+<h2>Games</h2>
+<table border="1">
+    <tr>
+        <th>Opponent</th>
+        <th>Date</th>
+        <th>Home/Away</th>
+        <th>Points For</th>
+        <th>Points Against</th>
+    </tr>
+    {% for g in games %}
+    <tr>
+        <td>{{ g.opponent }}</td>
+        <td>{{ g.game_date }}</td>
+        <td>{{ g.home_away }}</td>
+        <td>{{ g.points_for }}</td>
+        <td>{{ g.points_against }}</td>
+    </tr>
+    {% endfor %}
 </table>
 
-</section>
 
-
-<section>
-
-<h2>Team Statistics</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Stat</th>
-<th>Value</th>
-</tr>
-</thead>
-
-<tbody id="teamStats"></tbody>
-
+<h2>Player Stats</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Season</th>
+        <th>Passing Yards</th>
+        <th>Rushing Yards</th>
+        <th>Touchdowns</th>
+    </tr>
+    {% for s in stats %}
+    <tr>
+        <td>{{ s.name }}</td>
+        <td>{{ s.position }}</td>
+        <td>{{ s.season }}</td>
+        <td>{{ s.passing_yards }}</td>
+        <td>{{ s.rushing_yards }}</td>
+        <td>{{ s.touchdowns }}</td>
+    </tr>
+    {% endfor %}
 </table>
-
-</section>
-
-<section>
-
-<h2>Live Packers Game</h2>
-
-<div id="packersGame">
-
-Waiting for game...
-
-</div>
-
-</section>
-
-<section>
-
-<h2>2024 Schedule</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Week</th>
-<th>Home</th>
-<th>Away</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody id="lastYearSchedule"></tbody>
-
-</table>
-
-</section>
-
-
-<script src="/static/script.js"></script>
 
 </body>
 </html>

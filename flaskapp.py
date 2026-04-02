@@ -62,6 +62,19 @@ def delete_player(id):
     conn.close()
     return redirect(url_for("roster"))
 
+@app.route("/")
+def home():
+    players = get_all_players()
+    stats = get_player_stats()
+    games = get_games()
+
+    return render_template(
+        "index.html",
+        players=players,
+        stats=stats,
+        games=games
+    )
+
 @app.route("/update-player/<int:id>", methods=["POST"])
 def update_player(id):
     jersey = request.form["jersey"]
