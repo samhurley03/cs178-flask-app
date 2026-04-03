@@ -44,3 +44,30 @@ def get_games():
     result = cursor.fetchall()
     conn.close()
     return result
+
+def get_dashboard_summary():
+    conn = get_conn()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) as total_players FROM players")
+    total_players = cursor.fetchone()["total_players"]
+
+    cursor.execute("SELECT COUNT(*) as total_games FROM games")
+    total_games = cursor.fetchone()["total_games"]
+
+    cursor.execute("SELECT SUM(touchdowns) as total_tds FROM stats")
+    total_tds = cursor.fetchone()["total_tds"]
+
+    cursor.execute("""
+        SELECT 
+        SUM(CASE WHEN points_for > points_against THEN 1 ELSE 0 END) as wins,
+        COUNT(*) as total
+        FROM games
+    """)
+    record = cursor.fetchone()
+
+    conn.close()
+
+    win_pct = round((record["wins"] / record["total"]) * 100, 1) if record["total"] > 0 else 0
+
+    return total_players, total_games, total_tds, win_pct
