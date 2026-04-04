@@ -2,6 +2,7 @@
 # description: Packers Dashboard Flask App
 
 from flask import Flask, render_template, redirect, url_for, flash, request
+from dynamoCode import log_page_view
 from dbCode import *
 
 app = Flask(__name__)
@@ -45,6 +46,8 @@ def roster():
 # ===============================
 @app.route("/games")
 def games():
+    log_page_view("games", request.remote_addr)
+
     games = get_games()
     return render_template("games.html", games=games)
 
