@@ -30,8 +30,12 @@ def home():
 # ===============================
 @app.route("/roster")
 def roster():
-    players = get_all_players()
-    return render_template("roster.html", players=players)
+    conn = get_conn()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM players")
+    players = cursor.fetchall()
+    conn.close()
+    return render_template("players.html", players=players)
 
 
 # ===============================
