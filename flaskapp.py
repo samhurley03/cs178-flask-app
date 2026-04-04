@@ -144,27 +144,6 @@ def delete_player(player_id):
     return redirect(url_for("roster"))
 
 
-# ===============================
-# UPDATE PLAYER JERSEY
-# ===============================
-@app.route("/update-player/<int:id>", methods=["POST"])
-def update_player(id):
-    jersey = request.form["jersey"]
-
-    conn = get_conn()
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "UPDATE players SET jersey = %s WHERE player_id = %s",
-        (jersey, id)
-    )
-
-    conn.commit()
-    conn.close()
-
-    flash("Player updated successfully!")
-    return redirect(url_for("roster"))
-
 
 # ===============================
 # RUN APP
