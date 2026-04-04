@@ -125,17 +125,17 @@ def edit_player(player_id):
 def delete_player(player_id):
     conn = get_conn()
     cursor = conn.cursor()
-    
-    # GET request: show confirmation page
+
     if request.method == "GET":
         cursor.execute("SELECT * FROM players WHERE player_id = %s", (player_id,))
         player = cursor.fetchone()
         cursor.close()
         conn.close()
         return render_template("delete_player.html", player=player)
-    
-    # POST request: perform deletion
+
+    # POST: delete stats first, then player
     try:
+        cursor.execute("DELETE FROM stats WHERE player_id = %s", (player_id,))
         cursor.execute("DELETE FROM players WHERE player_id = %s", (player_id,))
         conn.commit()
     finally:
