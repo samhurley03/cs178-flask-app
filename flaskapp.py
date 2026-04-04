@@ -121,16 +121,23 @@ def edit_player(player_id):
 # ===============================
 # DELETE PLAYER
 # ===============================
-@app.route("/delete-player/<int:player_id>", methods=["POST", "GET"])
+@app.route("/delete-player/<int:player_id>", methods=["GET", "POST"])
 def delete_player(player_id):
     conn = get_conn()
     cursor = conn.cursor()
+    
+    # GET request: show confirmation page
+    if request.method == "GET":
+        cursor.execute("SELECT * FROM players WHERE player_id = %s", (player_id,))
+        player = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return render_template("delete_player.html", player=player)
+    
+    # POST request: perform deletion
     try:
         cursor.execute("DELETE FROM players WHERE player_id = %s", (player_id,))
         conn.commit()
-    except Exception as e:
-        conn.rollback()
-        flash(f"Error deleting player: {e}")
     finally:
         cursor.close()
         conn.close()
