@@ -125,9 +125,15 @@ def edit_player(player_id):
 def delete_player(player_id):
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM players WHERE player_id = %s", (player_id,))
-    conn.commit()
-    conn.close()
+    try:
+        cursor.execute("DELETE FROM players WHERE player_id = %s", (player_id,))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        flash(f"Error deleting player: {e}")
+    finally:
+        cursor.close()
+        conn.close()
     return redirect(url_for("roster"))
 
 
