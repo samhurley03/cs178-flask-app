@@ -1,20 +1,10 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Add New User</title>
-  </head>
-  <body>
-    <h1>Add New User</h1>
-    <form action="{{ url_for('add_user') }}" method="post">
-      <label for="f_name">First Name:</label><br />
-      <input type="text" id="f_name" name="f_name" required /><br />
-
-      <label for="l_name">Last Name:</label><br />
-      <input type="text" id="l_name" name="l_name" required /><br />
-
-      <label for="genre">Favorite Genre:</label><br />
-      <input type="text" id="genre" name="genre" required /><br />
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
-</html>
+<h1>Add Player</h1>
+<form method="POST">
+    Name: <input type="text" name="name" required><br>
+    Position: <input type="text" name="position" required><br>
+    Jersey: <input type="number" name="jersey" required><br>
+    Height: <input type="text" name="height" required><br>
+    Weight: <input type="text" name="weight" required><br>
+    <input type="submit" value="Add Player">
+</form>
+<a href="{{ url_for('roster') }}">Back to Roster</a>

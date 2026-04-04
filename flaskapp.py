@@ -55,30 +55,32 @@ def games():
 # ===============================
 # ADD PLAYER (UPDATED FOR YOUR SCHEMA)
 # ===============================
-@app.route("/add-player", methods=["POST"])
+@app.route("/add-player", methods=["GET", "POST"])
 def add_player():
-    name = request.form["name"]
-    position = request.form["position"]
-    jersey = request.form["jersey"]
-    height = request.form["height"]
-    weight = request.form["weight"]
+    if request.method == "POST":
+        name = request.form["name"]
+        position = request.form["position"]
+        jersey = request.form["jersey"]
+        height = request.form["height"]
+        weight = request.form["weight"]
 
-    conn = get_conn()
-    cursor = conn.cursor()
+        conn = get_conn()
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO players (name, position, jersey, height, weight)
+            VALUES (%s, %s, %s, %s, %s)
+            """,
+            (name, position, jersey, height, weight)
+        )
+        conn.commit()
+        conn.close()
 
-    cursor.execute(
-        """
-        INSERT INTO players (name, position, jersey, height, weight)
-        VALUES (%s, %s, %s, %s, %s)
-        """,
-        (name, position, jersey, height, weight)
-    )
+        flash("Player added successfully!")
+        return redirect(url_for("roster"))
 
-    conn.commit()
-    conn.close()
-
-    flash("Player added successfully!")
-    return redirect(url_for("roster"))
+    # GET request just shows the form
+    return render_template("add_user.html")
 
 
 # ===============================
