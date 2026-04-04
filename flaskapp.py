@@ -31,7 +31,7 @@ def home():
 @app.route("/roster")
 def roster():
     conn = get_conn()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM players")
     players = cursor.fetchall()
     conn.close()
