@@ -1,0 +1,9 @@
+<form method="POST">
+    Name: <input type="text" name="name" value="{{ player.name }}"><br>
+    Position: <input type="text" name="position" value="{{ player.position }}"><br>
+    Jersey: <input type="number" name="jersey" value="{{ player.jersey }}"><br>
+    Height: <input type="text" name="height" value="{{ player.height }}"><br>
+    Weight: <input type="text" name="weight" value="{{ player.weight }}"><br>
+    <input type="submit" value="Update Player">
+</form>
+<a href="{{ url_for('roster') }}">Back to Roster</a>

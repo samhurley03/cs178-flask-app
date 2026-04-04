@@ -86,6 +86,37 @@ def add_player():
     # GET request just shows the form
     return render_template("add_user.html")
 
+@app.route("/edit-player/<int:player_id>", methods=["GET", "POST"])
+def edit_player(player_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    
+    # Fetch existing player
+    cursor.execute("SELECT * FROM players WHERE player_id = %s", (player_id,))
+    player = cursor.fetchone()
+    
+    if request.method == "POST":
+        name = request.form["name"]
+        position = request.form["position"]
+        jersey = request.form["jersey"]
+        height = request.form["height"]
+        weight = request.form["weight"]
+        
+        cursor.execute(
+            """
+            UPDATE players
+            SET name=%s, position=%s, jersey=%s, height=%s, weight=%s
+            WHERE player_id=%s
+            """,
+            (name, position, jersey, height, weight, player_id)
+        )
+        conn.commit()
+        conn.close()
+        return redirect(url_for("roster"))
+    
+    conn.close()
+    return render_template("edit_player.html", player=player)
+
 
 # ===============================
 # DELETE PLAYER
