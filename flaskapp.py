@@ -38,13 +38,6 @@ def roster():
     return render_template("players.html", players=players)
 
 
-# ===============================
-# PLAYER STATS PAGE
-# ===============================
-@app.route("/playerstats")
-def playerstats():
-    stats = get_player_stats()
-    return render_template("playerstats.html", stats=stats)
 
 
 # ===============================
