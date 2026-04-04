@@ -1,75 +1,81 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Packers Dashboard</title>
-</head>
-<body>
+{% extends "layout.html" %}
 
-<h1>Green Bay Packers Dashboard</h1>
+{% block content %}
+
+<h1 class="mb-4">Green Bay Packers Dashboard</h1>
 
 <h2>Roster</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Position</th>
-        <th>Jersey</th>
-        <th>Height</th>
-        <th>Weight</th>
-    </tr>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Jersey</th>
+            <th>Height</th>
+            <th>Weight</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for p in players %}
-    <tr>
-        <td>{{ p.name }}</td>
-        <td>{{ p.position }}</td>
-        <td>{{ p.jersey }}</td>
-        <td>{{ p.height }}</td>
-        <td>{{ p.weight }}</td>
-    </tr>
+        <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.position }}</td>
+            <td>{{ p.jersey }}</td>
+            <td>{{ p.height }}</td>
+            <td>{{ p.weight }}</td>
+        </tr>
     {% endfor %}
+    </tbody>
 </table>
-
 
 <h2>Games</h2>
-<table border="1">
-    <tr>
-        <th>Opponent</th>
-        <th>Date</th>
-        <th>Home/Away</th>
-        <th>Points For</th>
-        <th>Points Against</th>
-    </tr>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Opponent</th>
+            <th>Date</th>
+            <th>Home/Away</th>
+            <th>Points For</th>
+            <th>Points Against</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for g in games %}
-    <tr>
-        <td>{{ g.opponent }}</td>
-        <td>{{ g.game_date }}</td>
-        <td>{{ g.home_away }}</td>
-        <td>{{ g.points_for }}</td>
-        <td>{{ g.points_against }}</td>
-    </tr>
+        <tr>
+            <td>{{ g.opponent }}</td>
+            <td>{{ g.game_date }}</td>
+            <td>{{ g.home_away }}</td>
+            <td>{{ g.points_for }}</td>
+            <td>{{ g.points_against }}</td>
+        </tr>
     {% endfor %}
+    </tbody>
 </table>
-
 
 <h2>Player Stats</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Position</th>
-        <th>Season</th>
-        <th>Passing Yards</th>
-        <th>Rushing Yards</th>
-        <th>Touchdowns</th>
-    </tr>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Season</th>
+            <th>Passing Yards</th>
+            <th>Rushing Yards</th>
+            <th>Touchdowns</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for s in stats %}
-    <tr>
-        <td>{{ s.name }}</td>
-        <td>{{ s.position }}</td>
-        <td>{{ s.season }}</td>
-        <td>{{ s.passing_yards }}</td>
-        <td>{{ s.rushing_yards }}</td>
-        <td>{{ s.touchdowns }}</td>
-    </tr>
+        <tr>
+            <td>{{ s.name }}</td>
+            <td>{{ s.position }}</td>
+            <td>{{ s.season }}</td>
+            <td>{{ s.passing_yards }}</td>
+            <td>{{ s.rushing_yards }}</td>
+            <td>{{ s.touchdowns }}</td>
+        </tr>
     {% endfor %}
+    </tbody>
 </table>
 
-</body>
-</html>
+{% endblock %}
