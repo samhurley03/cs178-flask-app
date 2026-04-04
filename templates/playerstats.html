@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Player Stats</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Player Stats</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Player ID</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Games Played</th>
+          <th>Points</th>
+          <th>Rebounds</th>
+          <th>Assists</th>
+          <!-- Add more columns depending on your stats table -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in stats %}
+        <tr>
+          <td>{{ stat.player_id }}</td>
+          <td>{{ stat.name }}</td>
+          <td>{{ stat.position }}</td>
+          <td>{{ stat.games_played }}</td>
+          <td>{{ stat.points }}</td>
+          <td>{{ stat.rebounds }}</td>
+          <td>{{ stat.assists }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <a href="{{ url_for('roster') }}">Back to Roster</a>
+  </body>
+</html>

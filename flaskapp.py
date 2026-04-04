@@ -143,6 +143,20 @@ def delete_player(player_id):
         conn.close()
     return redirect(url_for("roster"))
 
+@app.route("/player-stats")
+def playerstats():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT p.player_id, p.name, p.position, s.games_played, s.points, s.rebounds, s.assists
+        FROM players p
+        LEFT JOIN stats s ON p.player_id = s.player_id
+    """)
+    stats = cursor.fetchall()  # returns a list of dicts
+    cursor.close()
+    conn.close()
+    return render_template("playerstats.html", stats=stats)
+
 
 
 # ===============================
