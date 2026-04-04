@@ -1,4 +1,5 @@
 import boto3
+from boto3.dynamodb.conditions import Key
 from datetime import datetime
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
@@ -12,3 +13,9 @@ def log_page_view(page_name, user_ip):
             'user_ip': user_ip
         }
     )
+
+def get_page_view_count(page_name):
+    response = table.query(
+        KeyConditionExpression=Key('page').eq(page_name)
+    )
+    return len(response['Items'])

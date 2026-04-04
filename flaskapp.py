@@ -12,17 +12,22 @@ app.secret_key = 'your_secret_key'
 # ===============================
 # HOME DASHBOARD (SHOW ALL TABLES)
 # ===============================
+from dynamoCode import get_page_view_count
+
 @app.route("/")
 def home():
     players = get_all_players()
     stats = get_player_stats()
     games = get_games()
 
+    games_views = get_page_view_count("games")
+
     return render_template(
         "index.html",
         players=players,
         stats=stats,
-        games=games
+        games=games,
+        games_views=games_views
     )
 
 
