@@ -17,6 +17,8 @@ CREATE TABLE games (
     home_away VARCHAR(10),
     points_for INT,
     points_against INT
+
+   
 );
 
 CREATE TABLE stats (
@@ -45,3 +47,4 @@ VALUES
 (1, 2024, 4100, 200, 32),
 (2, 2024, 200, 1100, 10),
 (3, 2024, 0, 0, 7);
+

@@ -40,10 +40,20 @@ def get_player_stats():
 def get_games():
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM games;")
-    result = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT *,
+        CASE 
+            WHEN points_for > points_against THEN 'Win'
+            ELSE 'Loss'
+        END as result
+        FROM games
+        ORDER BY game_date
+    """)
+
+    games = cursor.fetchall()
     conn.close()
-    return result
+    return games
 
 def get_dashboard_summary():
     conn = get_conn()
