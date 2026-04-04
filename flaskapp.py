@@ -147,17 +147,17 @@ def delete_player(player_id):
 @app.route("/player-stats")
 def playerstats():
     conn = get_conn()
-    cursor = conn.cursor()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
     cursor.execute("""
-        SELECT p.player_id, p.name, p.position, s.games_played, s.points, s.rebounds, s.assists
+        SELECT p.player_id, p.name, p.position, p.jersey, p.height, p.weight,
+               s.season, s.passing_yards, s.rushing_yards, s.touchdowns
         FROM players p
         LEFT JOIN stats s ON p.player_id = s.player_id
     """)
-    stats = cursor.fetchall()  # returns a list of dicts
+    stats = cursor.fetchall()  # returns list of dicts
     cursor.close()
     conn.close()
     return render_template("playerstats.html", stats=stats)
-
 
 
 # ===============================

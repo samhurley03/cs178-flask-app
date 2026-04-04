@@ -14,33 +14,32 @@
   </head>
   <body>
     <h1>Player Stats</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Player ID</th>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Games Played</th>
-          <th>Points</th>
-          <th>Rebounds</th>
-          <th>Assists</th>
-          <!-- Add more columns depending on your stats table -->
-        </tr>
-      </thead>
-      <tbody>
-        {% for stat in stats %}
-        <tr>
-          <td>{{ stat.player_id }}</td>
-          <td>{{ stat.name }}</td>
-          <td>{{ stat.position }}</td>
-          <td>{{ stat.games_played }}</td>
-          <td>{{ stat.points }}</td>
-          <td>{{ stat.rebounds }}</td>
-          <td>{{ stat.assists }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th>Jersey</th>
+    <th>Height</th>
+    <th>Weight</th>
+    <th>Season</th>
+    <th>Passing Yards</th>
+    <th>Rushing Yards</th>
+    <th>Touchdowns</th>
+  </tr>
+  {% for stat in stats %}
+  <tr>
+    <td>{{ stat.name }}</td>
+    <td>{{ stat.position }}</td>
+    <td>{{ stat.jersey }}</td>
+    <td>{{ stat.height }}</td>
+    <td>{{ stat.weight }}</td>
+    <td>{{ stat.season or 'N/A' }}</td>
+    <td>{{ stat.passing_yards or 0 }}</td>
+    <td>{{ stat.rushing_yards or 0 }}</td>
+    <td>{{ stat.touchdowns or 0 }}</td>
+  </tr>
+  {% endfor %}
+</table>
 
     <a href="{{ url_for('roster') }}">Back to Roster</a>
   </body>
