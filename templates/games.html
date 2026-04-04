@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Games</h2>
+
+<table class="table">
+    <tr>
+        <th>Opponent</th>
+        <th>Date</th>
+        <th>Home/Away</th>
+        <th>Points For</th>
+        <th>Points Against</th>
+    </tr>
+
+    {% for game in games %}
+    <tr>
+        <td>{{ game.opponent }}</td>
+        <td>{{ game.game_date }}</td>
+        <td>{{ game.home_away }}</td>
+        <td>{{ game.points_for }}</td>
+        <td>{{ game.points_against }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
