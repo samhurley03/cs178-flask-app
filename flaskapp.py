@@ -121,17 +121,13 @@ def edit_player(player_id):
 # ===============================
 # DELETE PLAYER
 # ===============================
-@app.route("/delete-player/<int:id>")
-def delete_player(id):
+@app.route("/delete-player/<int:player_id>", methods=["POST", "GET"])
+def delete_player(player_id):
     conn = get_conn()
     cursor = conn.cursor()
-
-    cursor.execute("DELETE FROM players WHERE player_id = %s", (id,))
-
+    cursor.execute("DELETE FROM players WHERE player_id = %s", (player_id,))
     conn.commit()
     conn.close()
-
-    flash("Player deleted.")
     return redirect(url_for("roster"))
 
 
