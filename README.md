@@ -1,14 +1,14 @@
-# [Your Project Name Here]
+# Packers_db
 
 **CS178: Cloud and Database Systems — Project #1**
-**Author:** [Your Name]
-**GitHub:** [your-username]
+**Author:** Sam
+**GitHub:** samhurley03
 
 ---
 
 ## Overview
 
-<!-- Describe your project in 2-4 sentences. What does it do? Who is it for? What problem does it solve? -->
+<!-- My project is a Flask web application connected to an Amazon RDS MySQL database that manages Green Bay Packers player data and statistics. It allows users to create, view, update, and delete player records and associated stats through a web interface. The application is designed for coaches, analysts, or fans who want an organized way to manage and track player performance data. It solves the problem of manually managing roster and stats information by storing everything in a structured, centralized database accessible through a user-friendly website. -->
 
 ---
 
@@ -43,8 +43,8 @@ ProjectOne/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/samhurley03/cs178-flask-app.git
+   cd cs178-flask-app
    ```
 
 2. Install dependencies:
@@ -61,7 +61,7 @@ ProjectOne/
    python3 flaskapp.py
    ```
 
-5. Open your browser and go to `http://127.0.0.1:8080`
+5. Open your browser and go to `ec2-54-166-250-119.compute-1.amazonaws.com:8080`
 
 ---
 
@@ -70,7 +70,7 @@ ProjectOne/
 The app is deployed on an AWS EC2 instance. To view the live version:
 
 ```
-http://[your-ec2-public-ip]:8080
+ec2-54-166-250-119.compute-1.amazonaws.com:8080
 ```
 
 _(Note: the EC2 instance may not be running after project submission.)_
