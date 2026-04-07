@@ -1,7 +1,7 @@
 # Packers_db
 
 **CS178: Cloud and Database Systems — Project #1**
-**Author:** Sam
+**Author:** Sam Hurley
 **GitHub:** samhurley03
 
 ---
@@ -17,8 +17,8 @@
 - **Flask** — Python web framework
 - **AWS EC2** — hosts the running Flask application
 - **AWS RDS (MySQL)** — relational database used to store structured data such as players, games, and player statistics. This includes player names, positions, teams, game results, and statistical performance data that require relationships between tables (e.g., players linked to games and stats).
-- **AWS DynamoDB** — non-relational database for [describe what you stored]
-- **GitHub Actions** — non-relational database used to store flexible or supplemental data such as user interactions, logs, or additional metadata that does not require strict relational structure. This allows for scalable, fast access to key-value or document-based data without enforcing table relationships.
+- **AWS DynamoDB** — non-relational database used to store flexible or supplemental data such as user interactions, logs, or additional metadata that does not require strict relational structure. This allows for scalable, fast access to key-value or document-based data without enforcing table relationships.
+- **GitHub Actions** — auto-deploys code from GitHub to EC2 on push
 ---
 
 ## Project Structure
@@ -127,7 +127,7 @@ The JOIN query used in this project: <!-- The JOIN query combines the players an
 
 - **Table name:** `[packers-pageviews]`
 - **Partition key:** `[page]`
-- **Used for:** `[Displays how many time users visit the Games webpage]`
+- **Used for:** `[Displays how many time users visit the Games webpage and displays this on the home page of the website.]`
 
 ---
 
@@ -145,7 +145,7 @@ The JOIN query used in this project: <!-- The JOIN query combines the players an
 ## Challenges and Insights
 
 <!-- What was the hardest part? What did you learn? Any interesting design decisions?
-Understanding how to make the webpage run continually was my biggest challenge. It was the most difficult thing to implement but understanding the behind the scenes was difficult. -->
+Understanding how to make the webpage run continually was my biggest challenge. It wasn't the most difficult thing to implement but understanding the behind the scenes was difficult. -->
 
 ---
 
@@ -153,4 +153,4 @@ Understanding how to make the webpage run continually was my biggest challenge. 
 
 <!-- List any AI tools you used (e.g., ChatGPT) and briefly describe what you used them for. Per course policy, AI use is allowed but must be cited in code comments and noted here.
 
-I used AI for only the README file. It helped to describe my filepaths and tables concisely.   -->
+I used AI (ChatGPT) for only the README file. It helped to describe my filepaths and tables concisely. It provided better writing and communication for this file.   -->
