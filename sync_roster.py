@@ -24,7 +24,7 @@ def scrape_roster():
     players = []
 
     # NOTE: website structure may change
-    rows = soup.select("tr.ClubRoster_tr__*")  # sometimes dynamic class names
+    rows = soup.find_all("tr")  # sometimes dynamic class names
 
     for row in rows:
         cols = row.find_all("td")
