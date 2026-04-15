@@ -35,38 +35,27 @@ def scrape_roster():
 
     players = []
 
-    # grab all rows
     rows = soup.find_all("tr")
 
     for row in rows:
         cols = row.find_all("td")
 
-        # MUST have full row data (name, pos, jersey, height, weight)
-        if len(cols) < 5:
+        # must match full row structure (8 columns)
+        if len(cols) < 8:
             continue
 
         try:
             name = cols[0].get_text(strip=True)
-            position = cols[1].get_text(strip=True)
-            jersey = cols[2].get_text(strip=True)
+            jersey = cols[1].get_text(strip=True)
+            position = cols[2].get_text(strip=True)
             height = cols[3].get_text(strip=True)
             weight = cols[4].get_text(strip=True)
 
-            # 🔒 strict validation filters
-            if not name:
+            # skip headers / bad rows
+            if name.lower() in ["player", "name"]:
                 continue
 
-            if name.lower() in ["name", "player"]:
-                continue
-
-            if position.lower() in ["position", "pos"]:
-                continue
-
-            if jersey in ["", "0", "jersey"]:
-                continue
-
-            # optional sanity checks
-            if len(name) < 3:
+            if not name or not jersey:
                 continue
 
             players.append((name, position, jersey, height, weight))
