@@ -45,3 +45,8 @@ VALUES
 (3, 2024, 0, 0, 7);
 
 ALTER TABLE players ADD UNIQUE (name);
+
+DELETE FROM players
+WHERE position = '0'
+   OR height = 'None'
+   OR weight = 'None';

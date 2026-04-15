@@ -35,24 +35,41 @@ def scrape_roster():
 
     players = []
 
-    # safer generic approach (since site is JS-heavy / unstable)
+    # grab all rows
     rows = soup.find_all("tr")
 
     for row in rows:
         cols = row.find_all("td")
 
-        # skip invalid rows
-        if len(cols) < 3:
+        # MUST have full row data (name, pos, jersey, height, weight)
+        if len(cols) < 5:
             continue
 
         try:
             name = cols[0].get_text(strip=True)
             position = cols[1].get_text(strip=True)
             jersey = cols[2].get_text(strip=True)
+            height = cols[3].get_text(strip=True)
+            weight = cols[4].get_text(strip=True)
 
-            # basic cleanup
-            if name and position:
-                players.append((name, position, jersey))
+            # 🔒 strict validation filters
+            if not name:
+                continue
+
+            if name.lower() in ["name", "player"]:
+                continue
+
+            if position.lower() in ["position", "pos"]:
+                continue
+
+            if jersey in ["", "0", "jersey"]:
+                continue
+
+            # optional sanity checks
+            if len(name) < 3:
+                continue
+
+            players.append((name, position, jersey, height, weight))
 
         except Exception:
             continue
@@ -67,23 +84,24 @@ def upsert_players(players):
     conn = get_conn()
     cursor = conn.cursor()
 
-    # optional: reduce duplicates from scraping
     seen = set()
-    clean_players = []
+    clean = []
 
     for p in players:
         if p[0] not in seen:
-            clean_players.append(p)
+            clean.append(p)
             seen.add(p[0])
 
-    for name, position, jersey in clean_players:
+    for name, position, jersey, height, weight in clean:
         cursor.execute("""
-            INSERT INTO players (name, position, jersey)
-            VALUES (%s, %s, %s)
+            INSERT INTO players (name, position, jersey, height, weight)
+            VALUES (%s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
                 position = VALUES(position),
-                jersey = VALUES(jersey)
-        """, (name, position, jersey))
+                jersey = VALUES(jersey),
+                height = VALUES(height),
+                weight = VALUES(weight)
+        """, (name, position, jersey, height, weight))
 
     conn.commit()
     cursor.close()
