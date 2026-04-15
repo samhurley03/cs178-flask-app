@@ -31,11 +31,7 @@ CREATE TABLE stats (
     FOREIGN KEY (player_id) REFERENCES players(player_id)
 );
 
-INSERT INTO players (name, position, jersey, height, weight)
-VALUES
-('Jordan Love', 'QB', 10, '6-4', 219),
-('Aaron Jones', 'RB', 33, '5-9', 208),
-('Christian Watson', 'WR', 9, '6-4', 208);
+
 
 INSERT INTO games (opponent, game_date, home_away, points_for, points_against)
 VALUES
