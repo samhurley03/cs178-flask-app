@@ -48,3 +48,4 @@ VALUES
 (2, 2024, 200, 1100, 10),
 (3, 2024, 0, 0, 7);
 
+ALTER TABLE players ADD UNIQUE (name);
