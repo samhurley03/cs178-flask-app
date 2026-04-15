@@ -46,10 +46,10 @@ def scrape_roster():
 
         try:
             name = cols[0].get_text(strip=True)
-            jersey = cols[1].get_text(strip=True)
-            position = cols[2].get_text(strip=True)
-            height = cols[3].get_text(strip=True)
-            weight = cols[4].get_text(strip=True)
+            jersey = cols[2].get_text(strip=True)
+            position = cols[3].get_text(strip=True)
+            height = cols[4].get_text(strip=True)
+            weight = cols[5].get_text(strip=True)
 
             # skip headers / bad rows
             if name.lower() in ["player", "name"]:
