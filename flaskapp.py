@@ -1,4 +1,4 @@
-# author: Sam
+# author: Sam Hurley
 # description: Packers Dashboard Flask App
 
 from flask import Flask, render_template, redirect, url_for, flash, request
